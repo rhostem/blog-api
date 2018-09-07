@@ -3,7 +3,13 @@
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 
-# blog-api@blog-api-215703.iam.gserviceaccount.com
+# Google Analytic API
+# Creating a Report
+# https://developers.google.com/analytics/devguides/reporting/core/v4/basics
+
+# Dimensions & Metrics Explorer
+# https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = './blog-api-215703.json'
@@ -25,14 +31,32 @@ def initialize_analyticsreporting():
     return analytics
 
 
-def get_report(analytics):
-    """Queries the Analytics Reporting API V4.
+def get_pageview(analytics):
+    return analytics.reports().batchGet(
+        body={
+            'reportRequests': [
+                {
+                    'viewId': VIEW_ID,
+                    'dateRanges': [{'startDate': '7daysAgo', 'endDate': 'today'}],
+                    "metrics": [
+                        {
+                            "expression": "ga:pageviews",
+                        },
+                    ],
+                    "dimensions": [
+                        {
+                            "name": "ga:pagePath",
+                        },
+                    ],
+                    "orderBys": [
+                        {"fieldName": "ga:pageviews", "sortOrder": "DESCENDING"},
+                    ]
+                }]
+        }
+    ).execute()
 
-    Args:
-      analytics: An authorized Analytics Reporting API V4 service object.
-    Returns:
-      The Analytics Reporting API V4 response.
-    """
+
+def get_report_example(analytics):
     return analytics.reports().batchGet(
         body={
             'reportRequests': [
