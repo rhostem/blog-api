@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/venv": true
+  },
+  "python.pythonPath": "${workspaceFolder}/venv/bin/python",
+  "python.jediEnabled": false
+}
