@@ -71,11 +71,11 @@ def print_response(response):
                     print(metricHeader.get('name') + ': ' + value)
 
 
-def main():
-    analytics = initialize_analyticsreporting()
-    response = get_report(analytics)
-    print_response(response)
+# def main():
+#     analytics = initialize_analyticsreporting()
+#     response = get_report(analytics)
+#     print_response(response)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
