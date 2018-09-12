@@ -34,7 +34,7 @@ def initialize_analyticsreporting():
     return analytics
 
 
-def get_pageview(analytics, startDate='7daysAgo', endDate='today'):
+def get_post_pageview(analytics, startDate='7daysAgo', endDate='today'):
     """페이지뷰"""
 
     batchData = analytics.reports().batchGet(
@@ -61,15 +61,10 @@ def get_pageview(analytics, startDate='7daysAgo', endDate='today'):
     ).execute()
 
     rows = batchData.get('reports', [])[0].get('data', {}).get('rows', [])
-
-    print('rows', rows)
-
     postPage = {}
-
     MIN_COUNT = 10
 
     for row in rows:
-        # ^\/posts\/(?!\/)[가-힣\w-]+
         pagePath = row.get('dimensions', [])[0].lower()
         count = int(row.get('metrics')[0].get('values')[0])
 
@@ -79,7 +74,6 @@ def get_pageview(analytics, startDate='7daysAgo', endDate='today'):
 
         # 포스트 라우팅이 매칭되었을 때
         if postPathRegex.match(pagePath) and count > MIN_COUNT:
-            print(matchingPostPath.group())
             pagePath = matchingPostPath.group()
 
             # if pagePath not in pagePathList:
@@ -97,8 +91,6 @@ def get_pageview(analytics, startDate='7daysAgo', endDate='today'):
             'page': page,
             'count': postPage[page]['count']
         })
-        print(page)
-        pass
 
     result = sorted(result, key=lambda k: k['count'], reverse=True)
 
@@ -119,9 +111,6 @@ def get_report_example(analytics):
     ).execute()
 
     data = batchData.get('reports', [])[0].get('data', {})
-
-    print(data)
-
     res = {}
 
     return res
@@ -163,12 +152,9 @@ analytics = initialize_analyticsreporting()
 
 @ga_api.route('/api/ga/post_pageviews')
 def post_pageview():
-    print(request.args)
     startDate = request.args.get('startDate')
     endDate = request.args.get('endDate')
-
-    response = get_pageview(analytics, startDate, endDate)
-    # print(response['reports'][0]['data'])
+    response = get_post_pageview(analytics, startDate, endDate)
 
     return jsonRes(response)
 

@@ -3,6 +3,7 @@ autopep8==1.4
 cachetools==2.1.0
 click==6.7
 Flask==1.0.2
+Flask-Cors==3.0.6
 google-api-python-client==1.7.4
 google-auth==1.5.1
 google-auth-httplib2==0.0.3
