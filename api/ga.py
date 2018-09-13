@@ -15,7 +15,7 @@ import re
 import operator
 
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-KEY_FILE_LOCATION = './blog-api-215703.json'
+KEY_FILE_LOCATION = './ga_key.json'
 VIEW_ID = '136669174'
 
 
