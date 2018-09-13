@@ -10,4 +10,4 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/')
 def index():
-    return 'blog-api'
+    return '<h1>blog-api</h1>'
