@@ -1,0 +1,15 @@
+# /etc/systemd/system/blogapi.service
+
+[Unit]
+Description=uWSGI instance to serve flask app blog-api
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/www/blogapi
+Environment="PATH=/home/ubuntu/www/blogapi/venv/bin"
+ExecStart=/home/ubuntu/www/blogapi/venv/bin/uwsgi --ini blogapi.ini
+
+[Install]
+WantedBy=multi-user.target
