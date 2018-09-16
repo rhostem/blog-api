@@ -14,6 +14,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 import re
 import operator
 
+from functools import lru_cache
+
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = './ga_key.json'
 VIEW_ID = '136669174'
@@ -34,6 +36,7 @@ def initialize_analyticsreporting():
     return analytics
 
 
+@lru_cache(maxsize=128)
 def get_post_pageview(analytics, startDate='7daysAgo', endDate='today'):
     """페이지뷰"""
 
@@ -143,7 +146,7 @@ def print_response(response):
 
 def jsonRes(res):
     """response 데이터를 jsonify 모듈로 변환해서 전달"""
-    return jsonify(res), 200, {'Content-Type': 'application/json; charset=utf-8'}
+    return jsonify(res), 200
 
 
 ga_api = Blueprint('ga_api', __name__)
