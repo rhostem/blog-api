@@ -36,8 +36,8 @@ def initialize_analyticsreporting():
     return analytics
 
 
-@lru_cache(maxsize=128)
-def get_post_pageview(analytics, startDate='7daysAgo', endDate='today'):
+@lru_cache(maxsize=3)
+def get_post_pageview(analytics, startDate='7daysAgo', endDate='2018-09-19'):
     """페이지뷰"""
 
     batchData = analytics.reports().batchGet(
