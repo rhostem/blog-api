@@ -1,4 +1,4 @@
-## /etc/systemd/system/blogapi.service
+# /etc/systemd/system/blogapi.service
 
 [Unit]
 Description=uWSGI instance to serve flask app blog-api

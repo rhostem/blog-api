@@ -36,7 +36,7 @@ def initialize_analyticsreporting():
     return analytics
 
 
-@lru_cache(maxsize=3)
+@lru_cache(maxsize=10)
 def get_post_pageview(analytics, startDate='7daysAgo', endDate='2018-09-19'):
     """페이지뷰"""
 
@@ -65,7 +65,7 @@ def get_post_pageview(analytics, startDate='7daysAgo', endDate='2018-09-19'):
 
     rows = batchData.get('reports', [])[0].get('data', {}).get('rows', [])
     postPage = {}
-    MIN_COUNT = 10
+    MIN_COUNT = 1
 
     for row in rows:
         pagePath = row.get('dimensions', [])[0].lower()
@@ -76,7 +76,7 @@ def get_post_pageview(analytics, startDate='7daysAgo', endDate='2018-09-19'):
         matchingPostPath = postPathRegex.match(pagePath)
 
         # 포스트 라우팅이 매칭되었을 때
-        if postPathRegex.match(pagePath) and count > MIN_COUNT:
+        if postPathRegex.match(pagePath) and count >= MIN_COUNT:
             pagePath = matchingPostPath.group()
 
             # if pagePath not in pagePathList:
@@ -114,9 +114,8 @@ def get_report_example(analytics):
     ).execute()
 
     data = batchData.get('reports', [])[0].get('data', {})
-    res = {}
 
-    return res
+    return data
 
 
 def print_response(response):
