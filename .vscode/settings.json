@@ -4,5 +4,6 @@
   },
   "python.pythonPath": "${workspaceFolder}/venv/bin/python",
   "python.jediEnabled": false,
-  "python.linting.pylintEnabled": true
+  "python.linting.pylintEnabled": true,
+  "workbench.colorCustomizations": {}
 }
