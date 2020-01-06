@@ -14,7 +14,7 @@
 pip install -r requirements
 ```
 
-#### 설치한 패키지 정보를 파일애 저장
+#### 설치한 패키지 정보를 파일에 저장
 
 ```bash
 pip freeze > requirements
